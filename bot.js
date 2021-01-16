@@ -3,12 +3,12 @@
  * the standard input according to the problem statement.
  **/
 
-const factoryArr = [];
-const shootersArr = [];
-const neutralsArr = [];
-const enemiesArr = []; // 0 production neurtls and enemies
-const troopsArr = [];
-const bombsArr = [];
+let factoryArr = [];
+let shootersArr = [];
+let neutralsArr = [];
+let enemiesArr = []; // 0 production neurtls and enemies
+let troopsArr = [];
+let bombsArr = [];
 ////
 const factoryCount = parseInt(readline()); // the number of factories
 const linkCount = parseInt(readline()); // the number of links between factories
@@ -40,49 +40,32 @@ while (true) {
         const arg3 = parseInt(inputs[4]);
         const arg4 = parseInt(inputs[5]);
         const arg5 = parseInt(inputs[6]);
-
+        const in7 = 0
+        const out8 = 0
         //
-        if (entityType == 'FACTORY' && factoryArr.length > 0){
-            factoryArr[i] = [entityType, arg1, arg2, arg3, arg4, arg5, entityId]
-            if(arg1 == mine && (arg2 > 2 && arg3 > 0 || arg2 > 1 && arg3 == 0)){
-                shootersArr[i] = [entityType, arg1, arg2, arg3, arg4, arg5, entityId]
-            }
-            else if (arg1 == neutral){
-                neutralsArr[i] = [entityType, arg1, arg2, arg3, arg4, arg5, entityId]
-            }
-            else if (arg1 != mine){
-                enemiesArr[i] = [entityType, arg1, arg2, arg3, arg4, arg5, entityId]
-            }
-        }
-        else if (entityType == 'FACTORY' ){
+        if (entityType == 'FACTORY' ){
             factoryArr.push([entityType, arg1, arg2, arg3, arg4, arg5, entityId])
             if(arg1 == mine){
-                shootersArr.push([entityType, arg1, arg2, arg3, arg4, arg5, entityId])
+                shootersArr.push([entityType, arg1, arg2, arg3, arg4, arg5, entityId, in7, out8])
             }
             else if (arg1 == neutral){
-                neutralsArr.push([entityType, arg1, arg2, arg3, arg4, arg5, entityId])
+                neutralsArr.push([entityType, arg1, arg2, arg3, arg4, arg5, entityId, in7, out8])
             }
-            for (i = 0; i < shootersArr.length; i++){
-                if (shootersArr[i][1] !== 1){
-                    shootersArr.splice(i, 1)
-                }
-                else if (neutralsArr[i][1] !== 0){
-                    neutralsArr.splice(i, 1)
-                }
-                else if (enemiesArr[i][1] == 1){
-                    enemiesArr.splice(i, 1)
-                }
-            }
-            
         }
-
-        
-
-        
+        else if (entityType == "TROOP"){
+            troopsArr.push([entityType, arg1, arg2, arg3, arg4, arg5])
+        }
+        else if (entityType == "BOMB"){
+            bombsArr.push([entityType, arg1, arg2, arg3, arg4, arg5])
+        }
     }
 
 
-    console.error(factoryArr)
+    //console.error(factoryArr)
+    console.error(bombsArr)
+    console.error(troopsArr)
+    
+
     for (let y = 0; y < factoryCount; y++){
         if (factoryArr[y][0] == 'FACTORY'){
             if (factoryArr[y][1] == mine && factoryArr[y][2] > factoryArr[y][3]*2){
@@ -94,13 +77,12 @@ while (true) {
                         myFactory = y
                     }
                 }
-                //let a = entitiesArr.indexOf()
             }
             else if (factoryArr[y][1] == neutral && factoryArr[y][2] > 0){
                 for (let i = 3; i > 0; i--){
                     if (targetFactory > -1 && factoryArr[y][2] > factoryArr[targetFactory][2]){
                         targetFactory = y
-                        if (factoryArr[targetFactory][2] > shotsToFire/* && factoryArr[myFactory][2] > factoryArr[targetFactory][2]*/){
+                        if (factoryArr[targetFactory][2] > shotsToFire){
                             shotsToFire = factoryArr[targetFactory][2] 
                         }
                         else if (factoryArr[targetFactory][2] < shotsToFire){
@@ -120,7 +102,7 @@ while (true) {
                 for (let i = 3; i > 0; i--){
                     if (targetFactory > -1 && factoryArr[y][2] > factoryArr[targetFactory][2]){
                         targetFactory = y
-                        if (factoryArr[targetFactory][2] > shotsToFire /*&& factoryArr[myFactory][2] > factoryArr[targetFactory][2]*/){
+                        if (factoryArr[targetFactory][2] > shotsToFire){
                             shotsToFire = factoryArr[targetFactory][2] 
                         }
                         else if (factoryArr[targetFactory][2] < shotsToFire){
@@ -137,13 +119,14 @@ while (true) {
                 
             }
         }
-        // factoryArr.pop();
-        // troopsArr.pop();
-        // bombsArr.pop();
-        //factoryArr.
     }
 
-    
+    factoryArr = [];
+    shootersArr = [];
+    neutralsArr = [];
+    enemiesArr = [];
+    troopsArr = [];
+    bombsArr = [];
 
     if (targetFactory == -1 || myFactory == -1 || myFactory > factoryCount){
         console.log('WAIT')    
