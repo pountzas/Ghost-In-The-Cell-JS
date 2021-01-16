@@ -29,7 +29,7 @@ while (true) {
     let neutral = 0
     let myFactory = -1
     let targetFactory = -1
-    let shotsToFire = 5
+    let shotsToFire = 4
 
     for (let i = 0; i < entityCount; i++) {
         var inputs = readline().split(' ');
@@ -100,6 +100,15 @@ while (true) {
                 for (let i = 3; i > 0; i--){
                     if (targetFactory > -1 && factoryArr[y][2] > factoryArr[targetFactory][2]){
                         targetFactory = y
+                        if (factoryArr[targetFactory][2] > shotsToFire/* && factoryArr[myFactory][2] > factoryArr[targetFactory][2]*/){
+                            shotsToFire = factoryArr[targetFactory][2] 
+                        }
+                        else if (factoryArr[targetFactory][2] < shotsToFire){
+                            shotsToFire = factoryArr[targetFactory][2]
+                        }
+                        else {
+                            shotsToFire = 4
+                        }
                     }
                     else if (targetFactory = -1){
                         targetFactory = y
@@ -111,6 +120,15 @@ while (true) {
                 for (let i = 3; i > 0; i--){
                     if (targetFactory > -1 && factoryArr[y][2] > factoryArr[targetFactory][2]){
                         targetFactory = y
+                        if (factoryArr[targetFactory][2] > shotsToFire /*&& factoryArr[myFactory][2] > factoryArr[targetFactory][2]*/){
+                            shotsToFire = factoryArr[targetFactory][2] 
+                        }
+                        else if (factoryArr[targetFactory][2] < shotsToFire){
+                            shotsToFire = factoryArr[targetFactory][2] 
+                        }
+                        else {
+                            shotsToFire = 4
+                        }
                     }
                     else if (targetFactory = -1){
                         targetFactory = y
